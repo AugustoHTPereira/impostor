@@ -1,19 +1,43 @@
-import { Button } from "@/components/ui/button"
+import {
+  ImpostorProvider,
+  ImpostorStep,
+  useImpostor,
+} from "./components/impostor-provider"
+import { AddPlayersSection } from "./components/add-players-section"
+import { GameSettingsSection } from "./components/game-settings-section"
+import { PlayerSortingSection } from "./components/player-sorting-section"
+import { PlayingSection } from "./components/playing-section"
+import { FirstRoundSection } from "./components/first-round-section"
+
+export function SectionSwitcher() {
+  const { step } = useImpostor()
+
+  switch (step) {
+    case ImpostorStep.ADD_PLAYERS:
+      return <AddPlayersSection />
+
+    case ImpostorStep.GAME_SETTINGS:
+      return <GameSettingsSection />
+
+    case ImpostorStep.SORTING:
+      return <PlayerSortingSection />
+
+    case ImpostorStep.SEE_FIRST_KEYWORD:
+      return <FirstRoundSection />
+
+    case ImpostorStep.PLAYING:
+      return <PlayingSection />
+    default:
+      return null
+  }
+}
 
 export function App() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="p-4">
+      <ImpostorProvider>
+        <SectionSwitcher />
+      </ImpostorProvider>
     </div>
   )
 }
