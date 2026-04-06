@@ -8,17 +8,7 @@ import { FlipCard } from "./flip-card"
 
 export function PlaySection() {
   const audio = useRef(new Audio(ImpostorAudio))
-
-  const {
-    keyword,
-    firstPlayer,
-    players,
-    impostor,
-    randomizePlayer,
-    randomizeImpostor,
-    setStep,
-  } = useImpostor()
-
+  const { keyword, firstPlayer, players, impostor, setStep } = useImpostor()
   const [reveal, setReveal] = useState<boolean>(false)
 
   function handleRevealClick() {
@@ -28,11 +18,6 @@ export function PlaySection() {
   function handleNextRoundClick() {
     setStep(ImpostorStep.GAME_SETTINGS)
   }
-
-  useEffect(() => {
-    randomizePlayer()
-    randomizeImpostor()
-  }, [])
 
   useEffect(() => {
     const playAudio = async () => {

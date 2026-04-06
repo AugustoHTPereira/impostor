@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useState } from "react"
+import Keywords from "@/assets/keywords.json"
 
 export const ImpostorStep = {
   GAME_SETTINGS: "GAME_SETTINGS",
@@ -18,6 +19,7 @@ export interface ImpostorContextType {
   randomizePlayer: () => void
   impostor: string | null
   randomizeImpostor: () => void
+  randomizeKeyword: () => void
 }
 
 const ImpostorContext = createContext<ImpostorContextType>(
@@ -29,7 +31,7 @@ export function ImpostorProvider({ children }: { children: React.ReactNode }) {
   const [players, setPlayers] = useState<string[]>(() =>
     JSON.parse(localStorage.getItem("players") || "[]")
   )
-  const [keyword, setKeyword] = useState<string | null>("dinossauro")
+  const [keyword, setKeyword] = useState<string | null>(null)
   const [firstPlayer, setFirstPlayer] = useState<string | null>(null)
   const [impostor, setImpostor] = useState<string | null>(null)
 
@@ -59,6 +61,13 @@ export function ImpostorProvider({ children }: { children: React.ReactNode }) {
     setImpostor(players[randomIndex])
   }
 
+  function handleRandomizeKeyword() {
+    if (Keywords.length === 0) return
+
+    const randomIndex = Math.floor(Math.random() * Keywords.length)
+    setKeyword(Keywords[randomIndex].keyword)
+  }
+
   return (
     <ImpostorContext.Provider
       value={{
@@ -73,6 +82,7 @@ export function ImpostorProvider({ children }: { children: React.ReactNode }) {
         randomizePlayer: handleRandomizePlayer,
         impostor,
         randomizeImpostor: handleRandomizeImpostor,
+        randomizeKeyword: handleRandomizeKeyword,
       }}
     >
       {children}

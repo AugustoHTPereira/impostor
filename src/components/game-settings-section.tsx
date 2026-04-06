@@ -18,8 +18,16 @@ type SelectableCategory = {
 }
 
 export function GameSettingsSection() {
-  const { players, addPlayer, setPlayers, removePlayer, setStep } =
-    useImpostor()
+  const {
+    players,
+    addPlayer,
+    setPlayers,
+    removePlayer,
+    setStep,
+    randomizeKeyword,
+    randomizeImpostor,
+    randomizePlayer,
+  } = useImpostor()
   const [newPlayerName, setNewPlayerName] = useState("")
   const [playersName, setPlayersName] = useState("")
   const [categories, setCategories] = useState<SelectableCategory[]>(() =>
@@ -52,6 +60,14 @@ export function GameSettingsSection() {
         cat.category === category ? { ...cat, selected: !cat.selected } : cat
       )
     )
+  }
+
+  function handleStartGame() {
+    randomizeKeyword()
+    randomizeImpostor()
+    randomizePlayer()
+
+    setStep(ImpostorStep.SEE_KEYWORD)
   }
 
   return (
@@ -174,7 +190,7 @@ export function GameSettingsSection() {
             disabled={
               players.length < 3 || !categories.some((cat) => cat.selected)
             }
-            onClick={() => setStep(ImpostorStep.SEE_KEYWORD)}
+            onClick={handleStartGame}
           >
             Iniciar partida <RiCheckLine />
           </Button>

@@ -1,6 +1,6 @@
 import { cn, useDisclosure } from "@/lib/utils"
 import type React from "react"
-import { useEffect, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 
 interface FlipCardProps {
   children: [ReactNode, ReactNode]
@@ -15,6 +15,7 @@ export function FlipCard({
 }: FlipCardProps & React.ComponentProps<"div">) {
   const { isOpen, toggle, close, open: openDisclosure } = useDisclosure()
   const [front, back] = children
+  const [interval, updateInterval] = useState<number | null>(null)
 
   useEffect(() => {
     if (open) {
@@ -25,11 +26,15 @@ export function FlipCard({
   function handleToggle() {
     if (!isOpen) {
       toggle()
-      setTimeout(() => {
-        close()
-      }, 2000)
+      updateInterval(
+        setTimeout(() => {
+          close()
+        }, 2000)
+      )
     } else {
       close()
+      if (interval) clearInterval(interval)
+      updateInterval(null)
     }
   }
 
