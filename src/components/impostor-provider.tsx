@@ -9,7 +9,6 @@ export const ImpostorStep = {
 interface ImpostorKeyword {
   keyword: string
   category: string
-  tip?: string
 }
 
 export interface ImpostorContextType {
@@ -33,7 +32,7 @@ const ImpostorContext = createContext<ImpostorContextType>(
 
 const fetchKeywords = cache(async () => {
   const response = await fetch(
-    "https://gist.githubusercontent.com/AugustoHTPereira/6a94759bf29c2a2ba266b42685b1144c/raw/4b4849cd0a8a9ebc30c9c4970cfc8dd64bba4d7e/keywords.json"
+    "https://gist.githubusercontent.com/AugustoHTPereira/6a94759bf29c2a2ba266b42685b1144c/raw/9cbbcd7851a17129b1a3a4bf715ef66db4c06d17/keywords.json"
   ).then((response) => response.json())
 
   return response as ImpostorKeyword[]

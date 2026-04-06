@@ -24,7 +24,7 @@ export function KeywordRevealSection() {
   return (
     <div className="text-center">
       <h2 className="mb-2 text-center text-xl font-medium">
-        Revelar a palavra {impostor}
+        Revelar a palavra
       </h2>
 
       <p className="mb-6 text-center text-xs text-muted-foreground">
