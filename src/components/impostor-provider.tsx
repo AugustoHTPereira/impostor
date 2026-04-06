@@ -1,10 +1,15 @@
-import { createContext, useContext, useState } from "react"
-import Keywords from "@/assets/keywords.json"
+import { cache, createContext, useContext, useEffect, useState } from "react"
 
 export const ImpostorStep = {
   GAME_SETTINGS: "GAME_SETTINGS",
   SEE_KEYWORD: "SEE_KEYWORD",
   PLAY: "PLAY",
+}
+
+interface ImpostorKeyword {
+  keyword: string
+  category: string
+  tip?: string
 }
 
 export interface ImpostorContextType {
@@ -26,6 +31,14 @@ const ImpostorContext = createContext<ImpostorContextType>(
   {} as ImpostorContextType
 )
 
+const fetchKeywords = cache(async () => {
+  const response = await fetch(
+    "https://gist.githubusercontent.com/AugustoHTPereira/6a94759bf29c2a2ba266b42685b1144c/raw/4b4849cd0a8a9ebc30c9c4970cfc8dd64bba4d7e/keywords.json"
+  ).then((response) => response.json())
+
+  return response as ImpostorKeyword[]
+})
+
 export function ImpostorProvider({ children }: { children: React.ReactNode }) {
   const [step, setStep] = useState(ImpostorStep.GAME_SETTINGS)
   const [players, setPlayers] = useState<string[]>(() =>
@@ -34,6 +47,17 @@ export function ImpostorProvider({ children }: { children: React.ReactNode }) {
   const [keyword, setKeyword] = useState<string | null>(null)
   const [firstPlayer, setFirstPlayer] = useState<string | null>(null)
   const [impostor, setImpostor] = useState<string | null>(null)
+  const [keywords, setKeywords] = useState<ImpostorKeyword[]>([])
+
+  useEffect(() => {
+    async function handleFetchKeywords() {
+      setKeywords(await fetchKeywords())
+    }
+
+    if (!keywords.length) {
+      handleFetchKeywords()
+    }
+  }, [keyword])
 
   function handleAddPlayer(name: string) {
     setPlayers((prev) => [...prev, name])
@@ -61,11 +85,11 @@ export function ImpostorProvider({ children }: { children: React.ReactNode }) {
     setImpostor(players[randomIndex])
   }
 
-  function handleRandomizeKeyword() {
-    if (Keywords.length === 0) return
+  async function handleRandomizeKeyword() {
+    if (keywords.length === 0) return
 
-    const randomIndex = Math.floor(Math.random() * Keywords.length)
-    setKeyword(Keywords[randomIndex].keyword)
+    const randomIndex = Math.floor(Math.random() * keywords.length)
+    setKeyword(keywords[randomIndex].keyword)
   }
 
   return (

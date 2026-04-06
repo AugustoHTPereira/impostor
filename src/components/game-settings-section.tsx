@@ -4,18 +4,12 @@ import { Button } from "./ui/button"
 import { Textarea } from "./ui/textarea"
 import { useState } from "react"
 import { Input } from "./ui/input"
-import keywords from "@/assets/keywords.json"
 import {
   CollapseSection,
   CollapseSectionContent,
   CollapseSectionHeader,
   CollapseSectionTitle,
 } from "./collapse-section"
-
-type SelectableCategory = {
-  category: string
-  selected: boolean
-}
 
 export function GameSettingsSection() {
   const {
@@ -30,12 +24,6 @@ export function GameSettingsSection() {
   } = useImpostor()
   const [newPlayerName, setNewPlayerName] = useState("")
   const [playersName, setPlayersName] = useState("")
-  const [categories, setCategories] = useState<SelectableCategory[]>(() =>
-    [...new Set(keywords.map((x) => x.category))].map((category) => ({
-      category,
-      selected: true,
-    }))
-  )
 
   function handleSetPlayers() {
     const names = playersName
@@ -52,14 +40,6 @@ export function GameSettingsSection() {
       addPlayer(newPlayerName.trim())
       setNewPlayerName("")
     }
-  }
-
-  function handleCategoryClick(category: string) {
-    setCategories((prev) =>
-      prev.map((cat) =>
-        cat.category === category ? { ...cat, selected: !cat.selected } : cat
-      )
-    )
   }
 
   function handleStartGame() {
@@ -150,46 +130,11 @@ export function GameSettingsSection() {
           </CollapseSectionContent>
         </CollapseSection>
 
-        <CollapseSection>
-          <CollapseSectionHeader>
-            <h2>Categorias</h2>
-            <div className="flex h-6 w-6 items-center justify-center rounded-full border bg-accent text-center text-xs font-medium">
-              {categories.length}
-            </div>
-          </CollapseSectionHeader>
-
-          <CollapseSectionContent>
-            <div className="divide-y">
-              {categories.map(({ category, selected }) => (
-                <div key={category} className="py-1">
-                  <input
-                    type="checkbox"
-                    id={category}
-                    name={category}
-                    checked={selected}
-                    onChange={() => handleCategoryClick(category)}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor={category}
-                    className="flex w-full items-center justify-between gap-2"
-                  >
-                    {category}
-                    {selected && <RiCheckLine size="16" />}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </CollapseSectionContent>
-        </CollapseSection>
-
         <div>
           <Button
             className="w-full"
             size="lg"
-            disabled={
-              players.length < 3 || !categories.some((cat) => cat.selected)
-            }
+            disabled={players.length < 3}
             onClick={handleStartGame}
           >
             Iniciar partida <RiCheckLine />

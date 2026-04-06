@@ -5,12 +5,14 @@ import { useEffect, useState, type ReactNode } from "react"
 interface FlipCardProps {
   children: [ReactNode, ReactNode]
   open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function FlipCard({
   children,
   open,
   className,
+  onOpenChange,
   ...props
 }: FlipCardProps & React.ComponentProps<"div">) {
   const { isOpen, toggle, close, open: openDisclosure } = useDisclosure()
@@ -22,6 +24,10 @@ export function FlipCard({
       openDisclosure()
     }
   }, [open])
+
+  useEffect(() => {
+    onOpenChange?.(isOpen)
+  }, [isOpen])
 
   function handleToggle() {
     if (!isOpen) {

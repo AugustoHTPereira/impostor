@@ -50,7 +50,7 @@ export function PlaySection() {
           Clique sobre o nome do jogador para visualizar a palavra novamente.
         </p>
 
-        <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-3">
           {players.map((player) => (
             <FlipCard key={player} className="group min-h-[200px]">
               <div className="flex h-full flex-col items-center justify-between rounded-md border bg-secondary p-4">
@@ -80,8 +80,8 @@ export function PlaySection() {
                     <img
                       src={ImpostorImage}
                       alt="Impostor"
-                      width={100}
-                      height={100}
+                      width={50}
+                      height={50}
                     />
                   </div>
 
