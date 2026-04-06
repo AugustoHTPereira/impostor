@@ -1,0 +1,32 @@
+[
+  {
+    "keyword": "onça",
+    "category": "animal",
+    "tip": "A onça é um grande felino encontrado principalmente na América do Sul, conhecido por sua pelagem manchada e força impressionante."
+  },
+  {
+    "keyword": "cachorro",
+    "category": "animal",
+    "tip": "O cachorro é um animal doméstico muito popular, conhecido por sua lealdade e amizade com os humanos."
+  },
+  {
+    "keyword": "gato",
+    "category": "animal",
+    "tip": "O gato é um animal doméstico conhecido por sua independência e habilidade de caçar pequenos animais."
+  },
+  {
+    "keyword": "elefante",
+    "category": "animal",
+    "tip": "O elefante é o maior animal terrestre, conhecido por sua inteligência, memória e tromba versátil."
+  },
+  {
+    "keyword": "leão",
+    "category": "animal",
+    "tip": "O leão é um grande felino conhecido como o 'rei da selva', famoso por sua juba e comportamento social em grupos chamados de alcateias."
+  },
+  {
+    "keyword": "céu",
+    "category": "natureza",
+    "tip": "O céu é a região acima da Terra onde se encontram as nuvens, o sol, a lua e as estrelas, e é fundamental para a vida no planeta."
+  }
+]
