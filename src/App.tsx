@@ -1,36 +1,17 @@
-import { GameSettingsSection } from "./components/game-settings-section"
-import {
-  ImpostorProvider,
-  ImpostorStep,
-  useImpostor,
-} from "./components/impostor-provider"
-import { KeywordRevealSection } from "./components/keyword-reveal-section"
-import { PlaySection } from "./components/play-section"
-
-export function SectionSwitcher() {
-  const { step } = useImpostor()
-
-  switch (step) {
-    case ImpostorStep.GAME_SETTINGS:
-      return <GameSettingsSection />
-
-    case ImpostorStep.SEE_KEYWORD:
-      return <KeywordRevealSection />
-
-    case ImpostorStep.PLAY:
-      return <PlaySection />
-
-    default:
-      return null
-  }
-}
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ThemeProvider } from "./components/theme-provider"
+import { Router } from "./Router"
 
 export function App() {
+  const queryClient = new QueryClient()
+
   return (
-    <div className="px-4 py-6">
-      <ImpostorProvider>
-        <SectionSwitcher />
-      </ImpostorProvider>
+    <div className="mx-auto w-full max-w-sm">
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <Router />
+        </ThemeProvider>
+      </QueryClientProvider>
     </div>
   )
 }
