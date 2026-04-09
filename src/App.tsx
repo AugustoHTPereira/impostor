@@ -25,7 +25,7 @@ export function SectionSwitcher() {
   }
 }
 
-export function App() {
+export default function App() {
   return (
     <div className="mx-auto w-full max-w-sm px-4 py-6">
       <ImpostorProvider>
